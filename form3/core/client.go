@@ -37,7 +37,7 @@ func (c *Client) Execute(req *Request) (*Response, error) {
 	var rawReq *http.Request
 	rawReq, err = createHTTPRequest(req, c)
 	addClientHeaders(rawReq, c)
-	addRequestSpecificHeaders(rawReq, req)
+	addRequestHeaders(rawReq, req)
 	if err != nil {
 		return &Response{}, err
 	}
@@ -55,6 +55,7 @@ func CreateClient(baseURL string) *Client {
 		HttpClient: &http.Client{},
 		HostURL:    baseURL,
 	}
+	//Default headers, which can be overridden if required
 	c.SetHeader("Content-Type", Common.JSON_TYPE)
 	c.SetHeader("Accept", Common.JSON_TYPE)
 	return c
@@ -73,7 +74,7 @@ func addClientHeaders(req *http.Request, c *Client) {
 	}
 }
 
-func addRequestSpecificHeaders(rawReq *http.Request, req *Request) {
+func addRequestHeaders(rawReq *http.Request, req *Request) {
 	for k, v := range req.Header {
 		rawReq.Header[k] = v
 	}

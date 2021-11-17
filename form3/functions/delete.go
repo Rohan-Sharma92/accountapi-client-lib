@@ -12,10 +12,14 @@ import (
 func Delete(a Core.Client, accountID string, version int64) (http.Response, error) {
 	var err error
 
-	if accountID == "" {
-		return http.Response{StatusCode: http.StatusBadRequest, Status: "Bad Request"}, nil
+	err = Common.ValidateAccountId(accountID)
+	if err != nil {
+		return http.Response{StatusCode: http.StatusBadRequest}, err
 	}
-
+	err = Common.ValidateVersion(int(version))
+	if err != nil {
+		return http.Response{StatusCode: http.StatusBadRequest}, err
+	}
 	uri := fmt.Sprintf("%s/%s/%s/%s?version=%d", a.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID, version)
 	request := Core.Delete(uri)
 	response, err := a.Execute(request)

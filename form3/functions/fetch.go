@@ -11,11 +11,10 @@ import (
 
 func Fetch(a Core.Client, accountID string) (Model.AccountData, error) {
 	var err error
-
-	if accountID == "" {
-		return Model.AccountData{}, errors.New("cannot process empty accountID")
+	err = Common.ValidateAccountId(accountID)
+	if err != nil {
+		return Model.AccountData{}, err
 	}
-
 	uri := fmt.Sprintf("%s/%s/%s/%s", a.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID)
 	request := Core.Get(uri)
 	response, err := a.Execute(request)
