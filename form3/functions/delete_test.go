@@ -14,7 +14,8 @@ func TestClient_Delete_Invalid_Account(t *testing.T) {
 	body := `{"data":""}`
 	mock := Mocks.MockClient(404, []byte(body))
 	c := &Core.Client{HttpClient: mock}
-	response, err := Delete(*c, "Rohan", 1)
+	f3 := &Form3{Client: *c}
+	response, err := f3.Delete("Rohan", 1)
 	assert.NotNil(t, err)
 	assert.Equal(t, response.StatusCode, 404)
 	assert.Equal(t, err.Error(), "Invalid Request 404")
@@ -24,7 +25,8 @@ func TestClient_Delete_Valid_Account(t *testing.T) {
 	body := "Rohan"
 	mock := Mocks.MockClient(200, []byte(body))
 	c := &Core.Client{HttpClient: mock}
-	response, err := Delete(*c, "Rohan", 1)
+	f3 := &Form3{Client: *c}
+	response, err := f3.Delete("Rohan", 1)
 	assert.Nil(t, err)
 	assert.Equal(t, response.StatusCode, 200)
 }
@@ -32,6 +34,7 @@ func TestClient_Delete_Valid_Account(t *testing.T) {
 func TestClient_Delete_Malformed_URL(t *testing.T) {
 	c := &Core.Client{HttpClient: &http.Client{Timeout: time.Duration(1 * time.Second)},
 		HostURL: "http://wrong-address"}
-	_, err := Delete(*c, "Rohan", 1)
+	f3 := &Form3{Client: *c}
+	_, err := f3.Delete("Rohan", 1)
 	assert.NotNil(t, err)
 }

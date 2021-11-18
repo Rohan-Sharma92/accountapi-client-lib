@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/rohan-sharma92/accountapi-client-lib/form3/core"
 	"github.com/rohan-sharma92/accountapi-client-lib/form3/functions"
 	"github.com/rohan-sharma92/accountapi-client-lib/form3/models"
 	"github.com/stretchr/testify/assert"
@@ -18,7 +17,7 @@ func Test_E2E_Fetch_Fresh_User(t *testing.T) {
 	if apiURL == "" {
 		t.Skip("API URL not configured")
 	}
-	f3 := core.CreateClient(apiURL)
+	f3 := functions.Init(apiURL)
 	accountID := uuid.New().String()
 	acct := models.AccountData{
 		ID:             accountID,
@@ -30,10 +29,10 @@ func Test_E2E_Fetch_Fresh_User(t *testing.T) {
 		},
 	}
 
-	acc, err := functions.Create(*f3, acct)
+	acc, err := f3.Create(acct)
 	assert.Nil(t, err)
 	assert.Equal(t, acc.ID, accountID)
-	result, err := functions.Fetch(*f3, accountID)
+	result, err := f3.Fetch(accountID)
 
 	assert.Nil(t, err)
 	assert.Equal(t, acc.ID, result.ID)
@@ -45,7 +44,7 @@ func Test_E2E_Delete_Fresh_User(t *testing.T) {
 	if apiURL == "" {
 		t.Skip("API URL not configured")
 	}
-	f3 := core.CreateClient(apiURL)
+	f3 := functions.Init(apiURL)
 	accountID := uuid.New().String()
 	acct := models.AccountData{
 		ID:             accountID,
@@ -57,10 +56,10 @@ func Test_E2E_Delete_Fresh_User(t *testing.T) {
 		},
 	}
 
-	acc, err := functions.Create(*f3, acct)
+	acc, err := f3.Create(acct)
 	assert.Nil(t, err)
 	assert.Equal(t, acc.ID, accountID)
-	response, err := functions.Delete(*f3, acc.ID, *acc.Version)
+	response, err := f3.Delete(acc.ID, *acc.Version)
 	assert.Nil(t, err)
 	assert.Equal(t, response.StatusCode, http.StatusOK)
 }

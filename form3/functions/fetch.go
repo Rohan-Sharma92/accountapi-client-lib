@@ -9,15 +9,16 @@ import (
 	Model "github.com/rohan-sharma92/accountapi-client-lib/form3/models"
 )
 
-func Fetch(a Core.Client, accountID string) (Model.AccountData, error) {
+func (f *Form3) Fetch(accountID string) (Model.AccountData, error) {
 	var err error
 	err = Common.ValidateAccountId(accountID)
 	if err != nil {
 		return Model.AccountData{}, err
 	}
-	uri := fmt.Sprintf("%s/%s/%s/%s", a.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID)
+	c := f.Client
+	uri := fmt.Sprintf("%s/%s/%s/%s", c.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID)
 	request := Core.Get(uri)
-	response, err := a.Execute(request)
+	response, err := c.Execute(request)
 	if err != nil {
 		return Model.AccountData{}, err
 	}

@@ -9,7 +9,7 @@ import (
 	Core "github.com/rohan-sharma92/accountapi-client-lib/form3/core"
 )
 
-func Delete(a Core.Client, accountID string, version int64) (http.Response, error) {
+func (f *Form3) Delete(accountID string, version int64) (http.Response, error) {
 	var err error
 
 	err = Common.ValidateAccountId(accountID)
@@ -20,9 +20,10 @@ func Delete(a Core.Client, accountID string, version int64) (http.Response, erro
 	if err != nil {
 		return http.Response{StatusCode: http.StatusBadRequest}, err
 	}
-	uri := fmt.Sprintf("%s/%s/%s/%s?version=%d", a.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID, version)
+	c := f.Client
+	uri := fmt.Sprintf("%s/%s/%s/%s?version=%d", c.HostURL, Common.API_VERSION, Common.ACCOUNT_ROUTE, accountID, version)
 	request := Core.Delete(uri)
-	response, err := a.Execute(request)
+	response, err := c.Execute(request)
 	if err != nil {
 		return http.Response{}, err
 	}

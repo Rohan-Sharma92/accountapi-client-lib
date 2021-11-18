@@ -14,6 +14,7 @@ func TestClient_Create_Empty_Account(t *testing.T) {
 	body := `{"data":""}`
 	mock := Mocks.MockClient(404, []byte(body))
 	c := &Core.Client{HttpClient: mock}
+	f3 := &Form3{Client: *c}
 	acct := models.AccountData{
 		ID:             "",
 		OrganisationID: uuid.New().String(),
@@ -24,7 +25,7 @@ func TestClient_Create_Empty_Account(t *testing.T) {
 		},
 	}
 
-	response, err := Create(*c, acct)
+	response, err := f3.Create(acct)
 	assert.NotNil(t, err)
 	assert.Equal(t, response.ID, "")
 	assert.Equal(t, err.Error(), "Invalid Request 404")
@@ -43,8 +44,8 @@ func TestClient_Create_Valid_Account(t *testing.T) {
 			Name:    []string{"Rohan"},
 		},
 	}
-
-	response, err := Create(*c, acct)
+	f3 := &Form3{Client: *c}
+	response, err := f3.Create(acct)
 	assert.Nil(t, err)
 	assert.Equal(t, response.Attributes.Name[0], "Rohan")
 }
