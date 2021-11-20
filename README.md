@@ -20,7 +20,7 @@ docker-compose up
 ## Example of using the client library
 
 ```go
-f3 := functions.Init("http://localhost:8080")
+f3 := form3.Init("http://localhost:8080")
 
 // creates an organisation account insidde Form3
 org, err = f3.Create(account)
@@ -40,8 +40,11 @@ An overview of library design and decisions :
 ### Project Structure
 
 I have tried to keep files for similar functionality in same package. The project has a 'core' package in which common files for making a request, parsing response etc are added. This is written in an extensible way and can be reused for other entities.
-For the main functionality, I have created another package named functions which holds the functional implementation for each of the requested options. 
+For the main functionality, I have created another package named functions which holds the functional implementation for each of the requested options. The core functionality is wrapped in a package named core, similarly we have different package for models as well.
 
 ### Client library Implementation
 I have tried to keep the requests, response and client implementation separate so that each of them could be used independently for other entities if required. The request entity is a wrapper over vanilla http request and exposes all the relevant HTTP Methods and provides extensibility to include different headers, parameters if required.
+
+### Testing
+All the modules have been thoroughly tested. Along with this, I have added integration tests by connecting to the FakeAccount API provided.
 

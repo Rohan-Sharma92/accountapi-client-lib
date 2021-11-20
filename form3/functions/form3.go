@@ -14,9 +14,3 @@ func Init(host string) *Form3 {
 		Client: *client,
 	}
 }
-
-func InitWithClient(c core.Client) *Form3 {
-	return &Form3{
-		Client: c,
-	}
-}
