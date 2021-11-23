@@ -60,6 +60,6 @@ Following is representation of the application:
 ![alt text](Form3.png)
 
 ## Future Enhancements
-1. Add support for List and Put operations
+1. Add support for List and Put HTTP operations
 2. Enhance support for client side validations
 3. Reuse the Core functionality and extend this library for other entities
