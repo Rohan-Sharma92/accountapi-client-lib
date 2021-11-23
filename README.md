@@ -55,4 +55,4 @@ The docker-compose.yml starts up the following three containers:
 2. Postgres database
 3. Fake Account API Client
 
-![alt text](https://github.com/rohan-sharma92/accountapi-client-lib/Form3.jpg?raw=true)
+![alt text](Form3.jpg)
