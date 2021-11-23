@@ -63,3 +63,29 @@ func Test_E2E_Delete_Fresh_User(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, response.StatusCode, http.StatusOK)
 }
+
+func Test_E2E_Delete_Non_Existing_User(t *testing.T) {
+	apiURL := os.Getenv("API_URL")
+	//apiURL := "http://localhost:8080"
+	if apiURL == "" {
+		t.Skip("API URL not configured")
+	}
+	f3 := functions.Init(apiURL)
+	accountID := uuid.New().String()
+	response, err := f3.Delete(accountID, 0)
+	assert.Equal(t, err.Error(), "Invalid Request 404")
+	assert.Equal(t, response.StatusCode, http.StatusNotFound)
+}
+
+func Test_E2E_Fetch_Non_Existing_User(t *testing.T) {
+	apiURL := os.Getenv("API_URL")
+	//apiURL := "http://localhost:8080"
+	if apiURL == "" {
+		t.Skip("API URL not configured")
+	}
+	f3 := functions.Init(apiURL)
+	accountID := uuid.New().String()
+	response, err := f3.Fetch(accountID)
+	assert.Equal(t, err.Error(), "Invalid Request 404")
+	assert.Equal(t, response.ID, "")
+}

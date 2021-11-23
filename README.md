@@ -39,12 +39,20 @@ An overview of library design and decisions :
 
 ### Project Structure
 
-I have tried to keep files for similar functionality in same package. The project has a 'core' package in which common files for making a request, parsing response etc are added. This is written in an extensible way and can be reused for other entities.
-For the main functionality, I have created another package named functions which holds the functional implementation for each of the requested options. The core functionality is wrapped in a package named core, similarly we have different package for models as well.
+The project has a 'core' package which comprises of core functionalities like making a request and parsing response received. These can be reused for other entities, making this client library extensible. The functions package hosts implementation public APIs for performing account related operations, The data models are placed under models package.
 
 ### Client library Implementation
-I have tried to keep the requests, response and client implementation separate so that each of them could be used independently for other entities if required. The request entity is a wrapper over vanilla http request and exposes all the relevant HTTP Methods and provides extensibility to include different headers, parameters if required.
+The client library is designed in a way that it can be enhanced for performing operations on other entities as well. The requests and response implementations are designed as 
+a wrapper over vanilla http request/response implementations for providing more control such as  including different headers, request parameters if required.
 
 ### Testing
-All the modules have been thoroughly tested. Along with this, I have added integration tests by connecting to the FakeAccount API provided.
+All the modules have been thoroughly tested. Along with this, I have added integration tests by connecting to the FakeAccount API provided and these tests can be run using docker-compose up as requested.
 
+### Container Details
+For testing, a fake Account API client using this client API is provided using Dockerfile.
+The docker-compose.yml starts up the following three containers:
+1. Form3 Account Server
+2. Postgres database
+3. Fake Account API Client
+
+![alt text](https://github.com/rohan-sharma92/accountapi-client-lib/Form3.jpg?raw=true)
