@@ -11,21 +11,21 @@ import (
 type Request struct {
 	URL        string
 	Method     string
-	QueryParam url.Values
+	queryParam url.Values
 	Header     http.Header
 	Body       *bytes.Buffer
 }
 
 func r() *Request {
 	r := &Request{
-		QueryParam: url.Values{},
+		queryParam: url.Values{},
 		Header:     http.Header{},
 	}
 	return r
 }
 
 func (r *Request) SetQueryParam(param, value string) *Request {
-	r.QueryParam.Set(param, value)
+	r.queryParam.Set(param, value)
 	return r
 }
 

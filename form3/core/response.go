@@ -1,7 +1,6 @@
 package core
 
 import (
-	"io"
 	"net/http"
 )
 
@@ -22,12 +21,4 @@ func (r *Response) IsSuccess() bool {
 
 func (r *Response) IsError() bool {
 	return r.StatusCode() > 399
-}
-
-func (r *Response) Body() io.ReadCloser {
-	defer r.RawResponse.Body.Close()
-	if r.RawResponse == nil {
-		return nil
-	}
-	return r.RawResponse.Body
 }

@@ -19,6 +19,7 @@ func MockClient(code int, body []byte) *http.Client {
 				StatusCode: code,
 				Body:       ioutil.NopCloser(bytes.NewReader(body)),
 				Header:     make(http.Header),
+				Request:    request,
 			}
 		}),
 	}

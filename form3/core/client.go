@@ -3,7 +3,6 @@ package core
 import (
 	"net/http"
 	"net/url"
-	"strings"
 
 	Common "github.com/rohan-sharma92/accountapi-client-lib/form3/common"
 )
@@ -13,11 +12,6 @@ type Client struct {
 	QueryParam url.Values
 	Header     http.Header
 	HttpClient *http.Client
-}
-
-func (c *Client) SetBaseURL(url string) *Client {
-	c.HostURL = strings.TrimRight(url, "/")
-	return c
 }
 
 func (c *Client) SetHeader(header, value string) *Client {
